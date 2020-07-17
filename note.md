@@ -26,6 +26,12 @@
 
 
 
+### Auto Close Tab
+
+> 自动闭合标签插件
+
+
+
 ## 项目用到的插件
 
 ### less/less-loader
@@ -68,3 +74,22 @@ module.exports = {
 > 这个时候vue会自动安装style-resources-loader和vue-cli-plugin-style-resources-loader，并且自动添加vue.config.js文件
 >
 > 配置的话还和上边的配置一样即可
+
+
+
+### normalize.css
+
+> css初始化样式
+
+```shell
+npm i normalize.css
+```
+
+> main.js引入
+
+```shell
+import 'normalize.css'
+```
+
+
+
