@@ -9,7 +9,7 @@
     </div>
 
     <!-- 侧边栏下方部分 -->
-    <div class="side-bot">
+    <div class="side-bot hidden-sm-and-down">
       <!-- 作者介绍 -->
       <Info></Info>
       <!-- 订阅部分 -->
@@ -37,7 +37,7 @@ export default {
 
 <style scoped lang='less'>
 aside {
-  width: 240px;
+  width: 100%;
   height: 100%;
   .side-bot {
     margin-top: 10px;

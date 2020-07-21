@@ -45,28 +45,32 @@ body,
   left: 0;
 }
 #app {
-  display: flex;
   height: 3000px;
 }
-aside, main {
-  height: 100%;
-  float: left;
-}
-aside {
-  width: 240px;
-}
+
 main {
   margin-left: 10px;
-  background-color: red;
   width: 100%;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px #999;
 }
 @media only screen and (max-width: 991px) {
-
+  aside {
+    width: 100%;
+  }
 }
 
 @media only screen and (min-width: 992px) {
   #app {
     padding: 0 20px;
+    display: flex;
+  }
+  aside, main {
+    height: 100%;
+    float: left;
+  }
+  aside {
+    width: 240px;
   }
   .side {
     display: block;
