@@ -23,6 +23,7 @@ export default {
 </script>
 
 <style lang='less'>
+@import url('./assets/fonts/fonts.css');
 * {
   box-sizing: border-box;
   transition: all .5s;
@@ -34,7 +35,7 @@ body,
   height: 100%;
   // overflow: hidden;
   background-color: #f2f2f2;
-  font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Monda', "pingfang", "Microsoft YaHei", sans-serif;
 }
 .line {
   width: 100%;
@@ -51,12 +52,17 @@ body,
 main {
   margin-left: 10px;
   width: 100%;
+  height: 100%;
   background-color: #fff;
   box-shadow: 2px 2px 5px #999;
+  padding: 20px;
 }
 @media only screen and (max-width: 991px) {
   aside {
     width: 100%;
+  }
+  main {
+    margin-left: 0;
   }
 }
 

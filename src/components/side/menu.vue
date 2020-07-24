@@ -40,8 +40,8 @@ export default {
     // 监听窗口变化，控制菜单初始显示隐藏
     this.menuShow = document.body.clientWidth >= 991;
     window.onresize = () => {
+      if (document.body.clientWidth < 991) return
       this.menuShow = document.body.clientWidth >= 991;
-      console.log(this.menuShow);
     };
   },
   computed: {
@@ -75,6 +75,7 @@ export default {
   list-style: none;
   margin: 0;
   transition-duration: .2s;
+  box-shadow: 0 1px 1px #ccc;
   &.hide {
     padding: 0;
     height: 0;
@@ -112,14 +113,4 @@ export default {
     margin-right: 8px;
   }
 }
-// .slide-height-enter-active, .slide-height-leave-active {
-//   height: 0;
-//   transition: all .5s;
-// }
-// .slide-height-enter, .slide-height-leave-to {
-//   height: 100%;
-// }
-// .slide-height-enter-to, .slide-height-leave {
-//   height: 0;
-// }
 </style>

@@ -8,7 +8,7 @@
 
 <script>
 import ArticleInfo from '@/components/home/articleInfo'
-import Pagination from '@/components/home/pagination'
+import Pagination from '@/components/common/pagination'
 export default {
   name: 'Home',
   components: {
