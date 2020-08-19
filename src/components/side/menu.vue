@@ -28,7 +28,7 @@
 // tag
 export default {
   names: 'menus',
-  props: ['nums'],
+  props: ['menus'],
   data() {
     return {
       menuShow: true,
@@ -43,46 +43,6 @@ export default {
       bw: 0, // 记录body的宽度
       currentIndex: 1,
     }
-  },
-  computed: {
-    menus() {
-      const menus = [
-        { id: 1, icon: 'home', title: '首页', link: '/', name: 'home' },
-        { id: 2, icon: 'biaoqian', title: '标签', link: '/tags', name: 'tag' },
-        {
-          id: 3,
-          icon: 'fenlei',
-          title: '分类',
-          link: '/categories',
-          name: 'cate',
-        },
-        {
-          id: 4,
-          icon: 'guidang',
-          title: '归档',
-          link: '/archives',
-          name: 'arch',
-        },
-        { id: 5, icon: 'yonghu', title: '关于', link: '/about', name: 'about' },
-        {
-          id: 6,
-          icon: 'search',
-          title: '搜索',
-          link: '/search',
-          name: 'search',
-        },
-      ]
-      menus.map((menu) => {
-        this.nums.forEach((num) => {
-          if (num.name === menu.name) {
-            menu.nums = num.num
-            return menu
-          }
-        })
-      })
-      console.log(menus)
-      return menus
-    },
   },
   mounted() {
     // 监听窗口变化，控制菜单初始显示隐藏

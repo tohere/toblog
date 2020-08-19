@@ -3,17 +3,17 @@
     <!-- 侧边栏上方部分 -->
     <div class="side-top">
       <!-- logo部分 -->
-      <Logo :userInfo='userInfo'></Logo>
+      <Logo :userInfo="userInfo"></Logo>
       <!-- tab部分 -->
-      <Menu :nums='statistics'></Menu>
+      <Menu :menus='menus'></Menu>
     </div>
 
     <!-- 侧边栏下方部分 -->
     <div class="side-bot hidden-sm-and-down">
       <!-- 作者介绍 -->
-      <Info :userInfo='userInfo' :statistics='statistics'></Info>
+      <Info :userInfo="userInfo" :statistics="statistics"></Info>
       <!-- 订阅部分 -->
-      <Rss :friendlinks='links'></Rss>
+      <Rss :friendlinks="links"></Rss>
       <!-- 标签云部分 -->
     </div>
   </aside>
@@ -44,7 +44,47 @@ export default {
   },
   created () {
     this.getInfo()
-  },  
+  },
+  computed: {
+    menus() {
+      const menus = [
+        { id: 1, icon: 'home', title: '首页', link: '/', name: 'home' },
+        { id: 2, icon: 'biaoqian', title: '标签', link: '/tags', name: 'tag' },
+        {
+          id: 3,
+          icon: 'fenlei',
+          title: '分类',
+          link: '/categories',
+          name: 'cate',
+        },
+        {
+          id: 4,
+          icon: 'guidang',
+          title: '归档',
+          link: '/archives',
+          name: 'arch',
+        },
+        { id: 5, icon: 'yonghu', title: '关于', link: '/about', name: 'about' },
+        {
+          id: 6,
+          icon: 'search',
+          title: '搜索',
+          link: '/search',
+          name: 'search',
+        },
+      ]
+      menus.map((menu) => {
+        this.statistics.forEach((num) => {
+          if (num.name === menu.name) {
+            menu.nums = num.num
+            return menu
+          }
+        })
+      })
+      console.log(menus)
+      return menus
+    },
+  },
   methods: {
     getInfo () {
       getUserInfo().then(res => {
@@ -63,7 +103,7 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
+<style scoped lang="less">
 aside {
   width: 100%;
   height: 100%;
@@ -72,5 +112,4 @@ aside {
     background-color: #fff;
   }
 }
-
 </style>
