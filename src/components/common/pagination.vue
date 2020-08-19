@@ -108,12 +108,12 @@ export default {
     // 上一页
     prev() {
       if (this.nowPage <= 1) return
-      this.$emit('changePage', this.nowPage--)
+      this.$emit('changePage', --this.nowPage)
     },
     // 下一页
     next() {
       if (this.nowPage >= this.pageTotal) return
-      this.$emit('changePage', this.nowPage++)
+      this.$emit('changePage', ++this.nowPage)
     },
   },
 }
@@ -122,6 +122,7 @@ export default {
 <style lang="less" scoped>
 ul {
   list-style: none;
+  padding-left: 0;
   display: flex;
   li {
     width: 30px;
@@ -147,6 +148,7 @@ ul {
     }
     &.active {
       background-color: blue;
+      color: #fff;
     }
   }
 }

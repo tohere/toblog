@@ -1,18 +1,18 @@
 <template>
   <!-- 作者信息组件info -->
-  <div class="info flex-center">
+  <div class="info flex-center" v-if="userInfo.id">
     <div class="userimg">
-      <img src="https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1667994205,255365672&fm=5" alt="">
+      <img :src="userInfo.userimg" alt="">
     </div>
     <div class="username">
-      <h2>明天</h2>
-      <span class="blogname">明天的博客</span>
+      <h2>{{ userInfo.name }}</h2>
+      <span class="blogname">{{ userInfo.name }}的博客</span>
     </div>
     <!-- 统计部分 -->
     <div class="statistics">
-      <div class="flex-col-center" v-for="(item, index) in statistics" :key="index">
+      <div @click="clickC(item.name)" class="flex-col-center" v-for="(item, index) in statistics" :key="index">
         <b>{{ item.num }}</b>
-        <span>{{ item.name }}</span>
+        <span>{{ item.title }}</span>
       </div>
     </div>
   </div>
@@ -21,13 +21,35 @@
 <script>
 export default {
   name: 'info',
+  props: {
+    userInfo: {
+      type: Object,
+      default () {
+        return {}
+      }
+    },
+    statistics: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
+  },
   data () {
     return {
-      statistics: [
-        { name: '日志', num: 18 },
-        { name: '分类', num: 18 },
-        { name: '标签', num: 18 }
-      ]
+    }
+  },
+  methods: {
+    clickC (name) {
+      let path = ''
+      if (name === 'arch') {
+        path = '/archives'
+      } else if (name === 'cate') {
+        path = '/categories'
+      } else if (name === 'tag') {
+        path = '/tags'
+      }
+      this.$router.push({path})
     }
   }
 }

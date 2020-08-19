@@ -1,16 +1,24 @@
 <template>
   <!-- 侧边栏logo组件 -->
-  <div id="logo" class="flex-center">
+  <div id="logo" v-if="userInfo.id" class="flex-center">
     <div class="username">
-      <div>明天的博客</div>
+      <div>{{ userInfo.name }}的博客</div>
     </div>
-    <div class="desc">明天你是否会想起 昨天你写的日记</div>
+    <div class="desc">{{ userInfo.desc }}</div>
   </div>
 </template>
 
 <script>
 export default {
-
+  name: 'Logo',
+  props: {
+    userInfo: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  }
 }
 </script>
 

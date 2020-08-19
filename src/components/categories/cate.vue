@@ -2,11 +2,9 @@
   <!-- 分类组件 -->
   <ul class="cate" v-if="cates.length > 0">
     <li v-for="cate in cates" :key="cate.id">
-      <router-link :to="{ path: '/categories/' + cate.link }">
-        {{ cate.name }}
-      </router-link>
-      <span>{{ cate.articleNums }}</span>
-      <Cate :cates="cate.cates"></Cate>
+      <!-- <router-link :to="{ path: '/categories/' + cate.title }"></router-link> -->
+      <a href="javascript:;" @click="clickC(cate)">{{ cate.title }}</a>
+      <span>{{ cate.num }}</span>
     </li>
   </ul>
 </template>
@@ -27,6 +25,14 @@ export default {
     return {
     }
   },
+  methods: {
+    clickC (cate) {
+      this.$emit('clickC', cate)
+      this.$router.push({
+        path: '/categories/' + cate.id + '/' + cate.title 
+      })
+    }
+  }
 }
 </script>
 

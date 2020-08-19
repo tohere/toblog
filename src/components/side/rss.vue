@@ -1,19 +1,19 @@
 <template>
   <!-- rss订阅部分 -->
   <div class="rss">
-    <div class="icon flex-center">
+    <!-- <div class="icon flex-center">
       <i class="iconfont icon-rss"></i>
       <span>RSS</span>
-    </div>
+    </div> -->
     <!-- 订阅链接 -->
-    <ul class="links">
+    <!-- <ul class="links">
       <li v-for="(link, index) in rsslinks" :key="index">
         <a :href="link.link">
           <i class="iconfont" :class="link.icon"></i>
           <span>{{ link.name }}</span>
         </a>
       </li>
-    </ul>
+    </ul> -->
     <!-- 友链 -->
     <div class="friendly">
       <div class="title">
@@ -22,7 +22,7 @@
       </div>
       <ul class="friend-links">
         <li v-for="(link, index) in friendlinks" :key="index">
-          <a :href="link.link">
+          <a :href="link.link" :title="link.link" target="_blank">
             {{ link.name }}
           </a>
         </li>
@@ -34,6 +34,7 @@
 <script>
 export default {
   name: "rss",
+  props: ['friendlinks'],
   data() {
     return {
       rsslinks: [
@@ -43,11 +44,11 @@ export default {
         { name: "GitHub", icon: "icon-git", link: "https://wwww.baidu.com" },
         { name: "GitHub", icon: "icon-git", link: "https://wwww.baidu.com" }
       ],
-      friendlinks: [
-        { name: "百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度", link: "https://wwww.baidu.com" },
-        { name: "百度", link: "https://wwww.baidu.com" },
-        { name: "百度", link: "https://wwww.baidu.com" }
-      ]
+      // friendlinks: [
+      //   { name: "百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度百度", link: "https://wwww.baidu.com" },
+      //   { name: "百度", link: "https://wwww.baidu.com" },
+      //   { name: "百度", link: "https://wwww.baidu.com" }
+      // ]
     };
   }
 };
@@ -106,6 +107,7 @@ a {
     }
   }
   .friendly {
+    margin-top: 20px;
     font-size: 13px;
     .title {
       font-size: 13px;

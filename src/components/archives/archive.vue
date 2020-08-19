@@ -1,14 +1,16 @@
 <template>
   <!-- archive组件 -->
   <div class="archive">
-    <div class="all dot">共计 19 篇日志</div>
-    <div class="posts" v-for="posts in archives" :key="posts.id">
-      <h1 class="dot">2020</h1>
+    <div class="all dot" v-if="cate === 'log'">共计 {{ total }} 篇日志</div>
+    <div class="all dot" v-if="cate === 'cate'"> {{ $route.params.title }} 分类</div>
+    <div class="all dot" v-if=" cate === 'tag'">{{ $route.params.title }} 标签</div>
+    <div class="posts" v-for="arch in archives" :key="arch.id">
+      <h1 class="dot" v-if="arch.articles.length > 0">{{ arch.year }}</h1>
       <ul class="article">
-        <li class="dot" v-for="article in posts.articles" :key="article.id">
+        <li class="dot" v-for="(article, index) in arch.articles" :key="index">
           <time>{{ article.publishTime }}</time>
           <h2>
-            <router-link :to="article.link">{{ article.title }}</router-link>
+            <router-link :to="'/posts/' + article.id + '/' + article.title">{{ article.title }}</router-link>
           </h2>
         </li>
       </ul>
@@ -18,138 +20,154 @@
 
 <script>
 export default {
-  data() {
-    return {
-      total: 200,
-      archives: [
-        {
-          id: 1,
-          year: '2020',
-          articles: [
-            {
-              id: 1,
-              title: 'win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 2,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 3,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 4,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 6,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 5,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-          ],
-        },
-        {
-          id: 1,
-          year: '2020',
-          articles: [
-            {
-              id: 1,
-              title: 'win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 2,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 3,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 4,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 6,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 5,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-          ],
-        },{
-          id: 1,
-          year: '2020',
-          articles: [
-            {
-              id: 1,
-              title: 'win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 2,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 3,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 4,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 6,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-            {
-              id: 5,
-              title: 'win10下安装deepin双系统',
-              publishTime: '7-21',
-              link: '/posts/1',
-            },
-          ],
-        },
-      ],
+  props: {
+    archives: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    total: {
+      type: Number,
+      default: 0
     }
   },
+  data() {
+    return {
+      cate: '',
+      // total: 200,
+      // archives: [
+      //   {
+      //     id: 1,
+      //     year: '2020',
+      //     articles: [
+      //       {
+      //         id: 1,
+      //         title: 'win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 2,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 3,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 4,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 6,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 5,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     id: 2,
+      //     year: '2020',
+      //     articles: [
+      //       {
+      //         id: 1,
+      //         title: 'win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 2,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 3,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 4,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 6,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 5,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //     ],
+      //   },{
+      //     id: 3,
+      //     year: '2020',
+      //     articles: [
+      //       {
+      //         id: 1,
+      //         title: 'win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 2,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 3,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 4,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 6,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //       {
+      //         id: 5,
+      //         title: 'win10下安装deepin双系统',
+      //         publishTime: '7-21',
+      //         link: '/posts/1',
+      //       },
+      //     ],
+      //   },
+      // ],
+    }
+  },
+  created () {
+    this.cate = this.$route.meta.cate
+  }
 }
 </script>
 
@@ -219,7 +237,7 @@ export default {
       border-bottom: 1px dashed #ccc;
       color: #999;
       time {
-        width: 30px;
+        width: 40px;
         flex-shrink: 0;
       }
       h2 {

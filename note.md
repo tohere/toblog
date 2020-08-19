@@ -18,6 +18,20 @@
 }
 ```
 
+> 后不知什么原因不能提示，改用path autocomplete插件
+>
+> 然后在setting.json中进行如下配置
+
+```json
+"path-autocomplete.pathMappings": {
+  "@": "${folder}/src"
+},
+```
+
+
+
+
+
 ### 别名路径跳转
 
 > 解决别名@引入后按住Ctrl+鼠标左键不能跳转的问题
@@ -92,4 +106,22 @@ import 'normalize.css'
 ```
 
 
+
+### mavonEditor
+
+> markdown解析插件
+
+```shell
+npm i mavon-editor
+```
+
+> 引入方法：https://github.com/hinesboy/mavonEditor/blob/master/doc/cn/use.md
+
+
+
+## axios
+
+```shell
+npm i axios
+```
 

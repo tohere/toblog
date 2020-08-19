@@ -1,51 +1,96 @@
 <template>
   <!-- 首页页面 -->
-  <div id="home">
-    <article-info v-for="(articleInfo, index) in articleInfos" :key="index" :articleInfo='articleInfo'></article-info>
-    <Pagination :total='total'></Pagination>
+  <div id="home" ref='home' v-if="articles.length > 0">
+    <article-info
+      v-for="(info, index) in articles"
+      :key="index"
+      :articleInfo="info"
+    >
+      <div slot="articleTitle">
+        <article-title :articleInfo="info"></article-title>
+      </div>
+    </article-info>
+    <Pagination
+        :total="total"
+        :pageSize="pageSize"
+        @changePage="changePage"
+        class="flex-center"
+      ></Pagination>
   </div>
 </template>
 
 <script>
 import ArticleInfo from '@/components/home/articleInfo'
+import articleTitle from '@/components//common/articleTitle'
 import Pagination from '@/components/common/pagination'
+import { getArticles, getCates, getArtsNum } from '@/api'
 export default {
   name: 'Home',
   components: {
     ArticleInfo,
-    Pagination
+    Pagination,
+    articleTitle,
   },
-  data () {
+  data() {
     return {
       // 文章信息
-      articleInfos: [
-        {
-          isTop: false,
-          title: '文章标题',
-          publishTime: '2020-07-19 23:24:25',
-          updateTime: '2020-07-19 23:24:25',
-          categories: ['javascript', 'nodejs'],
-          articleWords: '2.5k',
-          readTime: '8分钟',
-          abstract: ''
-        },
-        {
-          isTop: false,
-          title: '文章标题',
-          publishTime: '2020-07-19 23:24:25',
-          updateTime: '2020-07-19 23:24:25',
-          categories: ['javascript', 'nodejs'],
-          articleWords: '2.5k',
-          readTime: '8分钟',
-          abstract: ''
-        }
-      ],
-      total: 123 // 文章总数
+      articles: [],
+      total: 0, // 文章总数
+      pageSize: 5, // 每页显示文章数
+      el: null
     }
-  }
+  },
+  created() {
+    this.getPageArticles(1, this.pageSize)
+    this.getNums()
+  },
+  methods: {
+    /**
+     * 获取分页文章详情
+     * page: 页码，默认为1
+     * pageSize: 每页显示条数，默认为5
+     */
+    async getPageArticles(page = 1, pageSize = 5) {
+      const cateData = await getCates()
+      if (cateData.status === 0) {
+        throw Error(cateData.err)
+      }
+      getArticles({
+        params: {
+          page,
+          pageSize,
+        },
+      }).then((res) => {
+        if (res.status === 1) {
+          if (res.data.length > 0) {
+            this.articles = res.data
+          }
+        } else {
+          throw Error(res.err)
+        }
+      })
+    },
+    /**
+     * 获取文章总数
+     */
+    getNums() {
+      getArtsNum().then((res) => {
+        if (res.status === 0) {
+          throw Error(res.err)
+        }
+        this.total = res.total[0].total
+      })
+    },
+    /**
+     * 点击页码跳转
+     */
+    changePage(item) {
+      this.getPageArticles(item, this.pageSize)
+      this.$refs.home.parentElement.scrollTop = 0
+    },
+  },
 }
 </script>
 
 <style lang="less" scoped>
-
 </style>

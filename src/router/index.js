@@ -6,7 +6,11 @@ Vue.use(Router)
 const Home = () => import('@/views/Home')
 const Tags = () => import('@/views/Tags')
 const Categories = () => import('@/views/Categories')
+const Arch = () => import('@/components/common/arch')
+
 const Archives = () =>import('@/views/Archives')
+const Posts = () => import('@/views/Posts')
+const NotFound = () => import('@/views/NotFound') 
 
 const routes = [
   {
@@ -15,24 +19,53 @@ const routes = [
     component: Home
   },
   {
-    path: '/tags/:id*',
+    path: '/tags',
     name: 'Tags',
-    component: Tags
+    component: Tags,
+    children: [
+      {
+        path: ':id/:title',
+        name: 'TagArch',
+        component: Arch,
+        meta: {
+          cate: 'tag'
+        }
+      }
+    ]
   },
   {
-    path: '/categories/:name*',
+    path: '/categories',
     name: 'Categories',
-    component: Categories
+    component: Categories,
+    children: [
+      {
+        path: ':id/:title',
+        name: 'CateArch',
+        component: Arch,
+        meta: {
+          cate: 'cate'
+        }
+      }
+    ]
   },
   {
     path: '/archives',
     name: 'Archives',
-    component: Archives
+    component: Archives,
+    meta: {
+      cate: 'log'
+    }
+  },
+  {
+    path: '/posts/:id/:title',
+    name: 'Posts',
+    component: Posts
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
   }
-  // {
-  //   path: '*',
-  //   redirect: '/'
-  // }
 ]
 
 const router = new Router({

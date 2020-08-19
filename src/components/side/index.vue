@@ -3,23 +3,26 @@
     <!-- 侧边栏上方部分 -->
     <div class="side-top">
       <!-- logo部分 -->
-      <Logo></Logo>
+      <Logo :userInfo='userInfo'></Logo>
       <!-- tab部分 -->
-      <Menu></Menu>
+      <Menu :nums='statistics'></Menu>
     </div>
 
     <!-- 侧边栏下方部分 -->
     <div class="side-bot hidden-sm-and-down">
       <!-- 作者介绍 -->
-      <Info></Info>
+      <Info :userInfo='userInfo' :statistics='statistics'></Info>
       <!-- 订阅部分 -->
-      <Rss></Rss>
+      <Rss :friendlinks='links'></Rss>
       <!-- 标签云部分 -->
     </div>
   </aside>
 </template>
 
 <script>
+
+import { getUserInfo } from '@/api'
+
 import Logo from './logo'
 import Menu from './menu'
 import Info from './info'
@@ -31,6 +34,31 @@ export default {
     Menu,
     Info,
     Rss
+  },
+  data () {
+    return {
+      userInfo: {},
+      statistics: [],
+      links: []
+    }
+  },
+  created () {
+    this.getInfo()
+  },  
+  methods: {
+    getInfo () {
+      getUserInfo().then(res => {
+        if (res.status === 1) {
+          this.userInfo = res.data.userInfo
+          this.statistics = res.data.statistics
+          this.links = res.data.links
+        } else {
+          throw Error(res.err)
+        }
+      }).catch(err => {
+        throw Error(err)
+      })
+    }
   }
 }
 </script>
