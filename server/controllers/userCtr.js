@@ -34,7 +34,7 @@ function getLinks () {
  * 获取用户信息
  */
 const getUserInfo = async (req, res) => {
-  const artNums = await getNums('SELECT COUNT(id) num, "日志" title, "arch" name FROM arts;')
+  const artNums = await getNums('SELECT COUNT(id) num, "日志" title, "arch" name FROM arts WHERE is_show = 1;')
   const cateNums = await getNums('SELECT COUNT(id) num, "分类" title, "cate" name FROM cates;')
   const tagNums = await getNums('SELECT COUNT(id) num, "标签" title, "tag" name FROM tags;')
   const links = await getLinks()

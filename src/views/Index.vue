@@ -25,13 +25,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+#index {
+  width: 100%;
+  height: 100%;
+}
 main {
-  position: absolute;
-  left: 270px;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  float: right;
+  height: 100%;
+  width: calc(100% - 250px);
   background-color: #fff;
   box-shadow: 2px 2px 5px #999;
   padding: 20px;
@@ -52,6 +53,8 @@ main {
 }
 aside {
   position: relative;
+  width: 100%;
+  float: left;
   z-index: 30;
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
@@ -74,8 +77,7 @@ aside {
     width: 100%;
   }
   main {
-    top: 120px;
-    left: 0;
+    width: 100%;
     scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
       display: none; /* Chrome Safari */
@@ -88,11 +90,6 @@ aside {
   #app {
     padding: 0 20px;
     display: flex;
-  }
-  aside,
-  main {
-    height: 100%;
-    float: left;
   }
   aside {
     width: 240px;

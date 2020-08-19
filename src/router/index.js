@@ -15,7 +15,8 @@ const Posts = () => import('@/views/Posts')
 const NotFound = () => import('@/views/NotFound')
 
 // 后台admin页面
-const Login = () => import('@/admin/Login')
+const Admin = () => import('@/admin/Admin')
+const Art = () => import('@/admin/arts')
 
 const routes = [
   {
@@ -74,9 +75,16 @@ const routes = [
     ],
   },
   {
-    path: '/admin/login',
-    name: 'Login',
-    component: Login,
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    children: [
+      {
+        path: '',
+        name: 'Art',
+        component: Art
+      }
+    ]
   },
   {
     path: '*',

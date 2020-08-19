@@ -81,7 +81,6 @@ export default {
           }
         })
       })
-      console.log(menus)
       return menus
     },
   },

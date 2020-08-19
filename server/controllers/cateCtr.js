@@ -2,11 +2,31 @@
 
 const query = require('../libs/mysql')
 
+/*
+SELECT
+	COUNT(*) nums 
+FROM
+	art_cate_fk ak
+	JOIN arts a ON a.id = ak.art_id 
+WHERE
+	cate_id = 1 
+	AND a.is_show =1
+*/
+
 /**
  * 通过分类id查询文章数量
  */
 function getNums (id) {
-  const sql = `SELECT COUNT(*) nums FROM art_cate_fk WHERE cate_id = ?;`
+  const sql = `
+              SELECT
+                COUNT(*) nums 
+              FROM
+                art_cate_fk ak
+                JOIN arts a ON a.id = ak.art_id 
+              WHERE
+                cate_id = ?
+                AND a.is_show =1
+              `
   return new Promise((resolve, reject) => {
     query(sql, [id], (err, data) => {
       if (err) {
@@ -27,6 +47,24 @@ FROM
 WHERE
 	c.id = ac.cate_id 
 GROUP BY(c.id)
+// 查询出未被删除的文章分类详情
+SELECT
+	c.*,
+	COUNT( c.id ) AS num 
+FROM
+	cates c
+	JOIN
+	art_cate_fk ac
+	ON c.id=ac.cate_id
+	JOIN
+	arts a
+	ON
+	a.id = ac.art_id
+	WHERE
+	is_show=1
+GROUP BY
+	(
+	c.id)
 */
 
 // 查询分类详情
@@ -35,11 +73,18 @@ const getAllCates = (req, res) => {
                   c.*,
                   COUNT( c.id ) AS num 
                 FROM
-                  cates c,
-                  art_cate_fk ac 
+                  cates c
+                JOIN
+                  art_cate_fk ac
+                ON c.id=ac.cate_id
+                JOIN
+                  arts a
+                ON
+                  a.id = ac.art_id
                 WHERE
-                  c.id = ac.cate_id 
-                GROUP BY(c.id)`
+                  is_show=1
+                GROUP BY
+                  (c.id)`
   query(sql, [], (err, cates) => {
     if (err) {
       return res.json({
@@ -65,7 +110,7 @@ function getY (id) {
                 arts a,
                 ( SELECT * FROM art_cate_fk WHERE cate_id = ? ) temp 
               WHERE
-                a.id = temp.art_id 
+                a.show = 1 and a.id = temp.art_id 
               ORDER BY
                 year DESC 
               `
@@ -113,7 +158,7 @@ const getArtsByCateId = async (req, res) => {
                 arts a,
                 ( SELECT * FROM art_cate_fk WHERE cate_id = ? ) temp 
               WHERE
-                a.id = temp.art_id 
+                a.is_show = 1 and a.id = temp.art_id 
               ORDER BY
                 a.pub_time DESC 
                 LIMIT ?, ?

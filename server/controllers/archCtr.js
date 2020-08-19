@@ -20,7 +20,7 @@ function getY () {
  * 查询文章总数
  */
 function getNums () {
-  const sql = `SELECT COUNT(id) total FROM arts;`
+  const sql = `SELECT COUNT(id) total FROM  arts WHERE is_show = 1;`
   return new Promise((resolve, reject) => {
     query(sql, [], (err, data) => {
       if (err) {
@@ -55,6 +55,7 @@ const getArchs = async(req, res) => {
                 DATE_FORMAT( pub_time, '%m-%d' ) AS publishTime
               FROM
                 arts 
+                WHERE is_show = 1
               ORDER BY
                 pub_time DESC
               LIMIT ?, ?

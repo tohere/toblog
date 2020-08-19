@@ -22,8 +22,8 @@ ORDER BY
  * 获取文章
  */
 const getArts = (req, res) => {
-  const page = req.query.page
-  const pageSize = req.query.pageSize
+  const page = Number(req.query.page) - 1
+  const pageSize = Number(req.query.pageSize)
   const sql = `
                 SELECT
                   a.*,
@@ -32,15 +32,16 @@ const getArts = (req, res) => {
                   arts a
                   JOIN art_cate_fk ac ON a.id = ac.art_id
                   JOIN cates c ON c.id = ac.cate_id 
+                  WHERE a.is_show = 1
                 GROUP BY
                   a.id ASC 
                 ORDER BY
                   istop DESC,
                   pub_time DESC,
                   up_time DESC
-                LIMIT ${(page - 1) * pageSize}, ${pageSize}
+                LIMIT ?, ?
                 `
-  query(sql, [], (err, data) => {
+  query(sql, [page * pageSize, pageSize], (err, data) => {
     if (err) {
       return res.json({
         status: 0,
@@ -58,7 +59,7 @@ const getArts = (req, res) => {
  * 获取文章总数
  */
 const getArtsNum = (req, res) => {
-  const sql = `SELECT COUNT(id) AS total FROM arts`
+  const sql = `SELECT COUNT(id) AS total FROM arts WHERE is_show = 1`
   query(sql, [], (err, total) => {
     if (err) {
       return res.json({
