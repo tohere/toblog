@@ -23,9 +23,11 @@
 import ArticleInfo from '@/components/home/articleInfo'
 import articleTitle from '@/components//common/articleTitle'
 import Pagination from '@/components/common/pagination'
-import { getArticles, getCates, getArtsNum } from '@/api'
+// import { getArticles, getArtsNum } from '@/api'
+import artMixin from '@/mixin/artMixin'
 export default {
   name: 'Home',
+  mixins: [artMixin],
   components: {
     ArticleInfo,
     Pagination,
@@ -34,8 +36,8 @@ export default {
   data() {
     return {
       // 文章信息
-      articles: [],
-      total: 0, // 文章总数
+      // articles: [],
+      // total: 0, // 文章总数
       pageSize: 5, // 每页显示文章数
       el: null
     }
@@ -50,37 +52,33 @@ export default {
      * page: 页码，默认为1
      * pageSize: 每页显示条数，默认为5
      */
-    async getPageArticles(page = 1, pageSize = 5) {
-      const cateData = await getCates()
-      if (cateData.status === 0) {
-        throw Error(cateData.err)
-      }
-      getArticles({
-        params: {
-          page,
-          pageSize,
-        },
-      }).then((res) => {
-        if (res.status === 1) {
-          if (res.data.length > 0) {
-            this.articles = res.data
-          }
-        } else {
-          throw Error(res.err)
-        }
-      })
-    },
+    // async getPageArticles(page = 1, pageSize = 5) {
+    //   getArticles({
+    //     params: {
+    //       page,
+    //       pageSize,
+    //     },
+    //   }).then((res) => {
+    //     if (res.status === 1) {
+    //       if (res.data.length > 0) {
+    //         this.articles = res.data
+    //       }
+    //     } else {
+    //       throw Error(res.err)
+    //     }
+    //   })
+    // },
     /**
      * 获取文章总数
      */
-    getNums() {
-      getArtsNum().then((res) => {
-        if (res.status === 0) {
-          throw Error(res.err)
-        }
-        this.total = res.total[0].total
-      })
-    },
+    // getNums() {
+    //   getArtsNum().then((res) => {
+    //     if (res.status === 0) {
+    //       throw Error(res.err)
+    //     }
+    //     this.total = res.total[0].total
+    //   })
+    // },
     /**
      * 点击页码跳转
      */

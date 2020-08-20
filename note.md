@@ -125,3 +125,16 @@ npm i mavon-editor
 npm i axios
 ```
 
+## keepAlive中include/exclude的用法问题
+
+> 用法
+
+```html
+<keep-alive exclude="Posts,Categories">
+  <router-view></router-view>
+</keep-alive>
+```
+
+**注意：include/exclude中的名字并不是router.js中命名的路由名字，而是对应的组件中export中命名的名字**
+
+> 参考: https://forum.vuejs.org/t/keep-alive-include-router-view/37525/9

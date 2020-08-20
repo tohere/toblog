@@ -89,7 +89,6 @@ const getArtById = (req, res) => {
                 WHERE
                   a.id =?;`
   query(sql, [artId], (err, data) => {
-    console.log(data[0].id)
     if (err || !data[0].id) {
       return res.json({
         status: 0,
@@ -109,7 +108,6 @@ const getArtById = (req, res) => {
 const addArt = (req, res) => {
   const art = req.body
   const pub_time = Date.now()
-  console.log(pub_time)
   const sql = `INSERT INTO arts(title, content, pub_time) VALUES('${art.title}', '${art.content}', '${pub_time}');`
   query(sql, [], (err, data) => {
     console.log(data)

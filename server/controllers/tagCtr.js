@@ -8,7 +8,6 @@ const query = require('../libs/mysql')
 const getAllTags = (req, res) => {
   const sql = `SELECT * FROM tags;`
   query(sql, [], (err, data) => {
-    console.log(data)
     if (err) {
       return res.json({
         status: 0,

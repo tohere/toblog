@@ -3,7 +3,7 @@
   <div id="admin">
     <aside>
       <Logo :userInfo="userInfo"></Logo>
-      <Menu :menus='menus'></Menu>
+      <Menu :menus="menus"></Menu>
     </aside>
     <main>
       <router-view></router-view>
@@ -21,36 +21,62 @@ export default {
   name: 'Admin',
   components: {
     Logo,
-    Menu
+    Menu,
   },
-  data () {
+  data() {
     return {
       userInfo: {},
       menus: [
         { id: 1, icon: 'shuji', title: '文章', link: '/', name: 'arts' },
-        { id: 2, icon: 'fenlei', title: '分类', link: '/admin/cate', name: 'cate' },
-        { id: 3, icon: 'biaoqian', title: '标签', link: '/admin/tag', name: 'tag' },
-        { id: 4, icon: 'yonghu', title: '用户', link: '/admin/user', name: 'user' },
-      ]
+        {
+          id: 2,
+          icon: 'fenlei',
+          title: '分类',
+          link: '/admin/cate',
+          name: 'cate',
+        },
+        {
+          id: 3,
+          icon: 'biaoqian',
+          title: '标签',
+          link: '/admin/tag',
+          name: 'tag',
+        },
+        {
+          id: 4,
+          icon: 'yonghu',
+          title: '用户',
+          link: '/admin/user',
+          name: 'user',
+        },
+        {
+          id: 5,
+          icon: 'huishouzhan',
+          title: '回收站',
+          link: '/admin/recycle',
+          name: 'recycle',
+        },
+      ],
     }
   },
-  created () {
+  created() {
     this.getInfo()
   },
   methods: {
-    getInfo () {
-      getUserInfo().then(res => {
-        console.log(res)
-        if (res.status === 1) {
-          this.userInfo = res.data.userInfo
-        } else {
-          throw Error(res.err)
-        }
-      }).catch(err => {
-        throw Error(err)
-      })
-    }
-  }
+    getInfo() {
+      getUserInfo()
+        .then((res) => {
+          if (res.status === 1) {
+            this.userInfo = res.data.userInfo
+          } else {
+            throw Error(res.err)
+          }
+        })
+        .catch((err) => {
+          throw Error(err)
+        })
+    },
+  },
 }
 </script>
 
@@ -61,7 +87,6 @@ export default {
 }
 aside {
   width: 100%;
-  height: 100%;
   float: left;
   background-color: #fff;
   /deep/ .menu {
@@ -74,6 +99,21 @@ main {
   float: right;
   padding: 20px;
   background-color: #fff;
+  position: relative;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 0px;
+    background-color: #ebe7e7;
+    border-radius: 6px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 6px;
+    background-color: #0ec7fe;
+    border-radius: 6px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
 }
 @media only screen and (max-width: 991px) {
   aside {
@@ -81,6 +121,10 @@ main {
   }
   main {
     width: 100%;
+    &::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+    }
+    -ms-overflow-style: none; /* IE 10+ */
   }
 }
 

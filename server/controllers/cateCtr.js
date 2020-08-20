@@ -37,6 +37,21 @@ function getNums (id) {
   })
 }
 
+/**
+ * 通过分类名称获取分类id
+ */
+function getId (cate) {
+  const sql = `SELECT id FROM cates WHERE title=?`
+  return new Promise((resolve, reject) => {
+    query(sql, [cate], (err, data) => {
+      if (err) {
+        resolve(err)
+      }
+      resolve(data)
+    })
+  })
+}
+
 /*
 SELECT
 	c.*,
@@ -83,8 +98,7 @@ const getAllCates = (req, res) => {
                   a.id = ac.art_id
                 WHERE
                   is_show=1
-                GROUP BY
-                  (c.id)`
+                GROUP BY c.id`
   query(sql, [], (err, cates) => {
     if (err) {
       return res.json({
@@ -110,7 +124,7 @@ function getY (id) {
                 arts a,
                 ( SELECT * FROM art_cate_fk WHERE cate_id = ? ) temp 
               WHERE
-                a.show = 1 and a.id = temp.art_id 
+                a.is_show = 1 and a.id = temp.art_id 
               ORDER BY
                 year DESC 
               `
@@ -143,7 +157,12 @@ ORDER BY
  * 通过id查找对应分类的文章
  */
 const getArtsByCateId = async (req, res) => {
-  const id = Number(req.query.id)
+  let id = 1
+  if (req.query.id) {
+    id = req.query.id
+  } else {
+    id = Number((await getId(req.query.cate))[0].id)
+  }
   const page = Number(req.query.page) - 1
   const pageSize = Number(req.query.pageSize)
   const nums = await getNums(id)
@@ -174,10 +193,15 @@ const getArtsByCateId = async (req, res) => {
       status: 1,
       total: nums[0].nums,
       years,
-      arts
+      arts,
+      cateId: id
     })
   })
 }
+
+/**
+ * 通过分类名称查找文章归档
+ */
 
 module.exports = {
   getAllCates,

@@ -7,7 +7,7 @@
     </aside>
     <!-- 主题内容部分 -->
     <main ref="content">
-      <keep-alive exclude="Posts">
+      <keep-alive exclude="Posts,Categories">
         <router-view></router-view>
       </keep-alive>
     </main>

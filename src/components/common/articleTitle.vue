@@ -27,9 +27,10 @@
         <i class="iconfont icon-folder"></i>
         <span class="cate hidden-sm-and-down">分类于 </span>
         <span v-for="(cate, index) in cates" :key="index">
-          <router-link class="link" :to="'/categories/' + cate">{{
+          <a href="javascript:;" class="link" @click="goCate(cate)">{{ cate }}</a>
+          <!-- <router-link class="link" :to="'/categories/' + cate">{{
             cate
-          }}</router-link>
+          }}</router-link> -->
           <span v-if="index !== cates.length-1"> ，</span>
         </span>
       </span>
@@ -58,6 +59,7 @@
 /* eslint-disable */
 import { strFilter } from '../../libs/strFilter'
 import { dateFormat } from '../../libs/dateFormat'
+import { getArtsByCateId } from '@/api'
 export default {
   props: {
     articleInfo: {
@@ -110,6 +112,26 @@ export default {
       return '0 分钟'
     }
   },
+  methods: {
+    goCate (cate) {
+      console.log(cate)
+      getArtsByCateId({
+        cate,
+        page: 1,
+        pageSize: 10
+      }).then(res => {
+        if (res.status === 1) {
+          this.$router.push({
+            path: `/categories/${res.cateId}/${cate}`
+          })
+        } else {
+          throw Error(res.err)
+        }
+      }).catch(err => {
+        throw Error(err)
+      })
+    }
+  }
 }
 </script>
 <style lang="less" scoped>
