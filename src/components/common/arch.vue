@@ -9,7 +9,7 @@
 <script>
 import Arch from '@/components/archives/archive'
 import Pagination from '@/components/common/pagination'
-import { getArtsByCateId } from '@/api'
+import { getArtsByCateId } from '@/api/get'
 export default {
   name: 'Categories',
   components: {

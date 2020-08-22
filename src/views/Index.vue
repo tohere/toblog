@@ -30,6 +30,7 @@ export default {
   height: 100%;
 }
 main {
+  position: relative;
   float: right;
   height: 100%;
   width: calc(100% - 250px);

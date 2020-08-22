@@ -9,7 +9,7 @@
 <script>
 import Archive from '@/components/archives/archive'
 import Pagination from '@/components/common/pagination'
-import { getArchs } from '@/api'
+import { getArchs } from '@/api/get'
 
 export default {
   name: 'Archives',

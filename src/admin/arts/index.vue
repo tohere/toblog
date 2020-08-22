@@ -3,25 +3,44 @@
   <div class="art">
     <div class="search flex-center">
       <div class="search-box">
-        <input type="search" class="search" placeholder="请输入搜索内容" />
+        <input
+          type="search"
+          @keyup.enter="search"
+          v-model="word"
+          class="search"
+          placeholder="请输入搜索内容"
+        />
       </div>
-      <button class="btn">搜索</button>
-      <button class="btn primary">写文章</button>
+      <button class="btn" @click="search">搜索</button>
+      <router-link tag="button" to='/admin/write' class="btn primary">写文章</router-link>
     </div>
     <div class="arts">
-      <art-list :articles="articles"></art-list>
+      <art-list
+        :articles="articles"
+        @optTop="top"
+        @setArtShow="delArt"
+      ></art-list>
     </div>
     <Pagination
       @changePage="changePage"
       :pageSize="pageSize"
       :total="total"
     ></Pagination>
+    <Dialog
+      @close="close"
+      :show="showDialog"
+      title="确定删除该文章吗?"
+      remind="警告"
+    ></Dialog>
   </div>
 </template>
-
 <script>
+/* eslint-disable */
 import ArtList from './artList'
 import Pagination from '@/components/common/pagination'
+import Dialog from '@/components/common/dialog'
+
+import { optTop, setArtShow } from '@/api/put'
 
 import artMixin from '@/mixin/artMixin'
 
@@ -31,10 +50,14 @@ export default {
   components: {
     ArtList,
     Pagination,
+    Dialog,
   },
   data() {
     return {
       pageSize: 10,
+      page: 1,
+      showDialog: false,
+      delObj: {},
     }
   },
   created() {
@@ -47,6 +70,47 @@ export default {
      */
     changePage(item) {
       this.getPageArticles(item, this.pageSize)
+    },
+    /**
+     * 取消置顶
+     */
+    top(param) {
+      optTop(param.id, param.top)
+        .then((res) => {
+          if (res.status === 1) {
+            this.getPageArticles(1, this.pageSize)
+          } else {
+            throw Error(res.err)
+          }
+        })
+        .catch((err) => {
+          throw Error(err)
+        })
+    },
+    /**
+     * 软删除文章
+     */
+
+    delArt(param) {
+      this.showDialog = true
+      this.delObj = param
+    },
+    close(param) {
+      if (param === 'confirm') {
+        setArtShow(this.delObj.id, this.delObj.show)
+          .then((res) => {
+            if (res.status === 1) {
+              this.getPageArticles(1, this.pageSize)
+              this.getNums()
+            } else {
+              throw Error(res.err)
+            }
+          })
+          .catch((err) => {
+            throw Error(err)
+          })
+      }
+      this.showDialog = false
     },
   },
 }

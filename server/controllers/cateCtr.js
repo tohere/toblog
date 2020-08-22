@@ -2,6 +2,9 @@
 
 const query = require('../libs/mysql')
 
+
+// --------------------- get操作部分 ---------------------
+
 /*
 SELECT
 	COUNT(*) nums 
@@ -96,8 +99,6 @@ const getAllCates = (req, res) => {
                   arts a
                 ON
                   a.id = ac.art_id
-                WHERE
-                  is_show=1
                 GROUP BY c.id`
   query(sql, [], (err, cates) => {
     if (err) {
@@ -199,11 +200,42 @@ const getArtsByCateId = async (req, res) => {
   })
 }
 
+
+
+// --------------------- post操作部分 ---------------------
+// --------------------- put操作部分 ---------------------
+// --------------------- delete操作部分 ---------------------
 /**
- * 通过分类名称查找文章归档
+ * 通过id删除分类
  */
+/*
+DELETE FROM art_cate_fk WHERE cate_id = 2;
+DELETE FROM cates WHERE id = 2;
+*/
+const delCateByid = (req, res) => {
+  const id = Number(req.body.id)
+  const sql = `
+  DELETE FROM art_cate_fk WHERE cate_id = ?;
+  DELETE FROM cates WHERE id = ?;
+  `
+  query(sql, [id, id], (err, data) => {
+    if (err) {
+      return res.json({
+        status: 0,
+        err
+      })
+    }
+    res.json({
+      status: 1,
+      data
+    })
+  })
+}
+
+
 
 module.exports = {
   getAllCates,
-  getArtsByCateId
+  getArtsByCateId,
+  delCateByid
 }

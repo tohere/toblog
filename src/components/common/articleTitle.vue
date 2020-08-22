@@ -59,7 +59,7 @@
 /* eslint-disable */
 import { strFilter } from '../../libs/strFilter'
 import { dateFormat } from '../../libs/dateFormat'
-import { getArtsByCateId } from '@/api'
+import { getArtsByCateId } from '@/api/get'
 export default {
   props: {
     articleInfo: {

@@ -6,13 +6,14 @@
           <router-link :to="'/posts/' + art.id + '/' + art.title" class="title" :title="art.title">
             {{ art.title }}
           </router-link>
-          <div class="pub-time">发布时间: 2020-09-12</div>
+          <div class="pub-time">发布时间: {{ art.pub_time | dateFilter }}</div>
         </div>
-        <div class="control">
-          <span v-show="false" class="top">置顶</span>
-          <span class="top">取消置顶</span>
-          <span class="edit iconfont icon-edit"></span>
-          <span class="del iconfont icon-el-icon-delete"></span>
+        <div class="control" :class="{'rec' : $route.path === '/admin/recycle'}">
+          <span v-show="art.istop && $route.path === '/admin'" class="top" @click="optTop(art, 0)">取消置顶</span>
+          <span v-show="!art.istop && $route.path === '/admin'"  class="top" @click="optTop(art, 1)">置顶</span>
+          <span v-show="$route.path === '/admin'" class="edit iconfont icon-edit"></span>
+          <span v-show="$route.path === '/admin'" class="del iconfont icon-el-icon-delete" @click="setArtShow(art.id, 0)"></span>
+          <span v-show="$route.path === '/admin/recycle'" class="recycle iconfont icon-huanyuan" @click="setArtShow(art.id, 1)"></span>
         </div>
       </li>
     </ul>
@@ -20,6 +21,8 @@
 </template>
 
 <script>
+import { dateFormat } from '@/libs/dateFormat'
+
 export default {
   props: ['articles'],
   data () {
@@ -36,6 +39,26 @@ export default {
       //     pub_time: '2020-09-09'
       //   }
       // ]
+    }
+  },
+  filters: {
+    // 时间过滤器
+    dateFilter (date) {
+      return dateFormat(date)
+    }
+  },
+  methods: {
+    optTop (art, top) {
+      this.$emit('optTop', {
+        id: art.id,
+        top
+      })
+    },
+    setArtShow (artId, show) {
+      this.$emit('setArtShow', {
+        id: artId,
+        show
+      })
     }
   }
 }
@@ -83,12 +106,19 @@ ul {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      &.rec {
+        width: 40px;
+        justify-content: center;
+      }
       span {
         padding: 5px;
         cursor: pointer;
       }
       .del {
         color: #f00;
+      }
+      .recycle {
+        color: green;
       }
       .top {
         width: 60px;

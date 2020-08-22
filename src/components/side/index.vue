@@ -21,7 +21,7 @@
 
 <script>
 
-import { getUserInfo } from '@/api'
+import { getUserInfo } from '@/api/get'
 
 import Logo from './logo'
 import Menu from './menu'
@@ -91,6 +91,7 @@ export default {
           this.userInfo = res.data.userInfo
           this.statistics = res.data.statistics
           this.links = res.data.links
+          console.log(res)
         } else {
           throw Error(res.err)
         }

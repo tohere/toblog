@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getTags } from '@/api'
+import { getTags } from '@/api/get'
 export default {
   name: 'Tags',
   data() {

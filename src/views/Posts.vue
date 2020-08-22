@@ -18,7 +18,7 @@
 
 <script>
 import ArticleTitle from '@/components/common/articleTitle'
-import { getArtById } from '../api'
+import { getArtById } from '../api/get'
 export default {
   name: 'Posts',
   components: {

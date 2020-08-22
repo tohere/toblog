@@ -2,6 +2,8 @@
 
 const query = require('../libs/mysql')
 
+// --------------------- get操作部分 ---------------------
+
 /**
  * 获取总数
  */
@@ -33,7 +35,11 @@ function getLinks () {
 /**
  * 获取用户信息
  */
+// SELECT COUNT(c.id) num, "分类" title, "cate" name FROM cates c JOIN art_cate_fk ac on c.id=ac.cate_id JOIN arts a on a.id = ac.art_id WHERE a.is_show=1;
+// SELECT COUNT(t.id) num, "标签" title, "tag" name FROM tags t JOIN art_tag_fk ag ON t.id = ag.tag_id JOIN arts a ON a.id = ag.art_id WHERE a.is_show = 1;
 const getUserInfo = async (req, res) => {
+
+  
   const artNums = await getNums('SELECT COUNT(id) num, "日志" title, "arch" name FROM arts WHERE is_show = 1;')
   const cateNums = await getNums('SELECT COUNT(id) num, "分类" title, "cate" name FROM cates;')
   const tagNums = await getNums('SELECT COUNT(id) num, "标签" title, "tag" name FROM tags;')
@@ -60,6 +66,10 @@ const getUserInfo = async (req, res) => {
     })
   })
 }
+
+// --------------------- post操作部分 ---------------------
+// --------------------- put操作部分 ---------------------
+// --------------------- delete操作部分 ---------------------
 
 module.exports = {
   getUserInfo,

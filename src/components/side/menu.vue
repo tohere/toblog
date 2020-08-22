@@ -44,6 +44,13 @@ export default {
       currentIndex: 1,
     }
   },
+  created () {
+    this.menus.forEach((item) => {
+      if (this.$route.fullPath.indexOf(item.link) !== -1) {
+        this.currentIndex = item.id
+      }
+    })
+  },
   mounted() {
     // 监听窗口变化，控制菜单初始显示隐藏
     this.bw = document.body.clientWidth
@@ -64,6 +71,7 @@ export default {
   methods: {
     menuClick(menu) {
       if (this.$route.path === menu.link) return
+      this.currentIndex = menu.id
       if (this.bw < 991) {
         this.menuShow = false
       }
@@ -72,20 +80,21 @@ export default {
       })
     },
   },
-  watch: {
-    '$route.path'(oldV) {
-      this.menus.forEach((item) => {
-        if (oldV.indexOf(item.link) !== -1) {
-          this.currentIndex = item.id
-        }
-      })
-    },
-  },
+  // watch: {
+  //   '$route.path'(oldV) {
+  //     this.menus.forEach((item) => {
+  //       if (oldV.indexOf(item.link) !== -1) {
+  //         this.currentIndex = item.id
+  //       }
+  //     })
+  //   },
+  // },
 }
 </script>
 
 <style lang="less" scoped>
 .menu-box {
+  user-select: none;
   position: relative;
   .icon-menu-btn {
     position: absolute;

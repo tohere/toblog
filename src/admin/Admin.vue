@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { getUserInfo } from '@/api'
+import { getUserInfo } from '@/api/get'
 
 import Logo from '@/components/side/logo'
 import Menu from '@/components/side/menu'
@@ -27,19 +27,19 @@ export default {
     return {
       userInfo: {},
       menus: [
-        { id: 1, icon: 'shuji', title: '文章', link: '/', name: 'arts' },
+        { id: 1, icon: 'shuji', title: '文章', link: '/admin', name: 'arts' },
         {
           id: 2,
           icon: 'fenlei',
           title: '分类',
-          link: '/admin/cate',
+          link: '/admin/cates',
           name: 'cate',
         },
         {
           id: 3,
           icon: 'biaoqian',
           title: '标签',
-          link: '/admin/tag',
+          link: '/admin/tags',
           name: 'tag',
         },
         {
@@ -95,7 +95,7 @@ aside {
 }
 main {
   width: calc(100% - 250px);
-  height: 4000px;
+  height: calc(100% - 120px);
   float: right;
   padding: 20px;
   background-color: #fff;

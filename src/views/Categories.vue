@@ -13,7 +13,7 @@
 
 <script>
 import Cate from '@/components/categories/cate'
-import { getCates } from '@/api'
+import { getCates } from '@/api/get'
 export default {
   name: 'Categories',
   components: {

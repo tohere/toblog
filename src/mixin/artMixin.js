@@ -1,9 +1,10 @@
-import { getArticles, getArtsNum } from '@/api'
+import { getArticles, getArtsNum, searchByWord } from '@/api/get'
 const artMixin = {
-  data () {
+  data() {
     return {
       articles: [],
       total: 0, // 文章总数
+      word: '', // 搜索文章关键字
     }
   },
   methods: {
@@ -31,7 +32,21 @@ const artMixin = {
         this.total = res.total[0].total
       })
     },
-  }
+    search() {
+      searchByWord(this.word, this.page, this.pageSize)
+        .then((res) => {
+          if (res.status === 1) {
+            this.articles = res.data
+            this.total = res.total
+          } else {
+            throw Error(res.err)
+          }
+        })
+        .catch((err) => {
+          throw Error(err)
+        })
+    },
+  },
 }
 
 export default artMixin

@@ -32,7 +32,6 @@ export default {
 * {
   box-sizing: border-box;
   transition: all 0.5s;
-  user-select: none;
 }
 html,
 body,

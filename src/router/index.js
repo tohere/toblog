@@ -17,11 +17,15 @@ const NotFound = () => import('@/views/NotFound')
 // 后台admin页面
 const Admin = () => import('@/admin/Admin')
 const Art = () => import('@/admin/arts')
+const AdminCates = () => import('@/admin/cates')
+const Recycle = () => import('@/admin/recycle')
+const AdminTags = () => import('@/admin/tags')
+const AdminUser = () => import('@/admin/user')
+const Write = () => import('@/admin/arts/write')
 
 const routes = [
   {
     path: '/',
-    name: 'Index',
     component: Index,
     children: [
       {
@@ -76,13 +80,37 @@ const routes = [
   },
   {
     path: '/admin',
-    name: 'Admin',
     component: Admin,
     children: [
       {
         path: '',
         name: 'Art',
         component: Art
+      },
+      {
+        path: 'cates',
+        name: 'AdminCates',
+        component: AdminCates
+      },
+      {
+        path: 'recycle',
+        name: 'Recycle',
+        component: Recycle
+      },
+      {
+        path: 'tags',
+        name: 'AdminTags',
+        component: AdminTags
+      },
+      {
+        path: 'user',
+        name: 'AdminUser',
+        component: AdminUser
+      },
+      {
+        path: 'write',
+        name: 'Write',
+        component: Write
       }
     ]
   },
