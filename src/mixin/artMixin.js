@@ -8,11 +8,12 @@ const artMixin = {
     }
   },
   methods: {
-    async getPageArticles(page = 1, pageSize = 5) {
+    async getPageArticles(page = 1, pageSize = 5, admin='') {
       getArticles({
         params: {
           page,
           pageSize,
+          admin
         },
       }).then((res) => {
         if (res.status === 1) {
@@ -24,16 +25,16 @@ const artMixin = {
         }
       })
     },
-    getNums() {
-      getArtsNum().then((res) => {
+    getNums(admin='') {
+      getArtsNum(admin).then((res) => {
         if (res.status === 0) {
           throw Error(res.err)
         }
         this.total = res.total[0].total
       })
     },
-    search() {
-      searchByWord(this.word, this.page, this.pageSize)
+    search(admin='') {
+      searchByWord(this.word, this.page, this.pageSize, admin)
         .then((res) => {
           if (res.status === 1) {
             this.articles = res.data

@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     getAllTags () {
-      getTags().then(res => {
+      getTags('admin').then(res => {
         if (res.status === 1) {
           this.tags = res.data
         } else {

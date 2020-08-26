@@ -21,12 +21,11 @@ export default {
     }
   },
   created () {
-    console.log(this.$route)
     this.getRecycleArts()
   },
   methods: {
     getRecycleArts() {
-      getRecycle()
+      getRecycle('admin')
         .then((res) => {
           if (res.status === 1) {
             this.articles = res.data

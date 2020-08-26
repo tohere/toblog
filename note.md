@@ -138,3 +138,8 @@ npm i axios
 **注意：include/exclude中的名字并不是router.js中命名的路由名字，而是对应的组件中export中命名的名字**
 
 > 参考: https://forum.vuejs.org/t/keep-alive-include-router-view/37525/9
+
+## 关于vue+express cookie的一些用法
+
+> 参考: https://www.jianshu.com/p/e5c9162d14e3
+

@@ -56,7 +56,6 @@ export default {
               })
             })
             this.archives = arr
-            console.log(arr)
           } else {
             throw Error(res.err)
           }

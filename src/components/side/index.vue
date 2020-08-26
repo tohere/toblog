@@ -91,7 +91,6 @@ export default {
           this.userInfo = res.data.userInfo
           this.statistics = res.data.statistics
           this.links = res.data.links
-          console.log(res)
         } else {
           throw Error(res.err)
         }

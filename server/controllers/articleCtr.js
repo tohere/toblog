@@ -1,5 +1,7 @@
 // --------------------- 文章操作 ---------------------
 const query = require('../libs/mysql')
+const dateFormat = require('../libs/dateFormat')
+
 
 
 // --------------------- get操作部分 ---------------------
@@ -189,12 +191,21 @@ const getRecycle = (req, res) => {
  */
 const addArt = (req, res) => {
   const art = req.body
-  const pub_time = Date.now()
-  const sql = `INSERT INTO arts(title, content, pub_time) VALUES('${art.title}', '${art.content}', '${pub_time}');`
-  query(sql, [], (err, data) => {
-    console.log(data)
+  let pub_time = Date.now()
+  pub_time = dateFormat(pub_time)
+  const sql = `INSERT INTO arts(title, content, pub_time) VALUES(?, ?, ?);`
+  query(sql, [art.title, art.content, pub_time], (err, data) => {
+    if (err) {
+      return res.json({
+        status: 0,
+        err
+      })
+    }
+    res.json({
+      status: 1,
+      data
+    })
   })
-  res.send('ok')
 }
 
 
@@ -256,6 +267,30 @@ const setArtShow = (req, res) => {
   })
 }
 
+/**
+ * 设置谋篇文章的阅读数
+ */
+/*
+UPDATE arts SET readnums = 2 WHERE id = 93
+*/
+const setReadNum = (req, res) => {
+  const id = req.body.id
+  const num = Number(req.body.num)
+  const sql = `UPDATE arts SET readnums = ? WHERE id = ?;`
+  query(sql, [num, id], (err, data) => {
+    if (err) {
+      return res.json({
+        status: 0,
+        err
+      })
+    }
+    res.json({
+      status: 1,
+      data
+    })
+  })
+}
+
 // --------------------- delete操作部分 ---------------------
 
 
@@ -267,5 +302,6 @@ module.exports = {
   optTop,
   setArtShow,
   search,
-  getRecycle
+  getRecycle,
+  setReadNum
 }

@@ -6,7 +6,7 @@ const router = express.Router()
 // ------------- 控制器 ------------
 const artCtr = require('../controllers/articleCtr')
 
-// ------------- 查询操作 -------------
+// ------------- get操作 -------------
 // 获取文章详情
 router.get('/getArts', artCtr.getArts)
 // 获取文章总数
@@ -19,13 +19,18 @@ router.get('/search', artCtr.search)
 router.get('/recycle', artCtr.getRecycle)
 
 
-// ------------- 修改操作 -------------
+// ------------- post操作 -------------
+// 添加文章
+router.post('/addArt', artCtr.addArt)
+
+
+// ------------- put操作 -------------
 // 控制文章是否置顶
 router.put('/top', artCtr.optTop)
 // 控制文章是否显示(此处为软删除)
 router.put('/show', artCtr.setArtShow)
+// 设置谋篇文章阅读数
+router.put('/setReadNum', artCtr.setReadNum)
 
-// 添加文章
-router.post('/addArt', artCtr.addArt)
 
 module.exports = router

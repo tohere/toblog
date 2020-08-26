@@ -21,36 +21,12 @@
 </template>
 
 <script>
-import { getTags } from '@/api/get'
+
+import tagMixin from '@/mixin/tagMixin'
+
 export default {
   name: 'Tags',
-  data() {
-    return {
-      tags: [
-        // { id: 1, name: 'js' },
-        // { id: 2, name: 'vue' },
-        // { id: 3, name: 'nodenodenodenode' }
-      ],
-    }
-  },
-  created() {
-    this.getAllTags()
-  },
-  methods: {
-    getAllTags() {
-      getTags()
-        .then((res) => {
-          if (res.status === 1) {
-            this.tags = res.data
-          } else {
-            throw Error(res.err)
-          }
-        })
-        .catch((err) => {
-          throw Error(err)
-        })
-    },
-  },
+  mixins: [tagMixin]
 }
 </script>
 

@@ -13,41 +13,17 @@
 
 <script>
 import Cate from '@/components/categories/cate'
-import { getCates } from '@/api/get'
+
+import cateMixin from '@/mixin/cateMixin'
+
 export default {
   name: 'Categories',
+  mixins: [cateMixin],
   components: {
     Cate
   },
-  data() {
-    return {
-      cates: [
-        // {
-        //   id: 1,
-        //   name: '菜单',
-        //   articleNums: 3,
-        // },
-        // {
-        //   id: 2,
-        //   name: 'hexo',
-        //   articleNums: 3,
-        // },
-      ]
-    }
-  },
   created() {
     this.getAllCates()
-  },
-  methods: {
-    getAllCates() {
-      getCates().then((res) => {
-        if (res.status === 1) {
-          this.cates = res.cates
-        } else {
-          throw Error(res.err)
-        }
-      })
-    }
   },
 }
 </script>

@@ -11,7 +11,7 @@
         <div class="control" :class="{'rec' : $route.path === '/admin/recycle'}">
           <span v-show="art.istop && $route.path === '/admin'" class="top" @click="optTop(art, 0)">取消置顶</span>
           <span v-show="!art.istop && $route.path === '/admin'"  class="top" @click="optTop(art, 1)">置顶</span>
-          <span v-show="$route.path === '/admin'" class="edit iconfont icon-edit"></span>
+          <span v-show="$route.path === '/admin'" class="edit iconfont icon-edit" @click="edit(art)"></span>
           <span v-show="$route.path === '/admin'" class="del iconfont icon-el-icon-delete" @click="setArtShow(art.id, 0)"></span>
           <span v-show="$route.path === '/admin/recycle'" class="recycle iconfont icon-huanyuan" @click="setArtShow(art.id, 1)"></span>
         </div>
@@ -59,6 +59,17 @@ export default {
         id: artId,
         show
       })
+    },
+    /**
+     * 文章编辑
+     */
+    edit (art) {
+      this.$router.push({
+        name: 'Edit',
+        params: {
+          id: art.id
+        }
+      })
     }
   }
 }
@@ -90,6 +101,12 @@ ul {
       overflow: hidden;
       .pub-time {
         line-height: 26px;
+        color: #666;
+      }
+      a {
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
       }
     }
     .title {

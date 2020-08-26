@@ -2,7 +2,7 @@
   <ul class="list">
     <li v-for="list in lists" :key="list.id">
       <div class="inner">
-        <span class="title" :title="list.title">{{ list.title }} <i v-if="$route.path === '/admin/cates'">({{list.num}})</i></span>
+        <span class="title" :title="list.title">{{ list.title }}</span>
         <span class="del iconfont icon-el-icon-delete" @click="del(list.id)"></span>
       </div>
     </li>

@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     getInfo() {
-      getUserInfo()
+      getUserInfo('admin')
         .then((res) => {
           if (res.status === 1) {
             this.userInfo = res.data.userInfo

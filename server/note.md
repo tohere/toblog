@@ -77,3 +77,23 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 ```
 
+
+
+## cookie-parser: 用于cookie操作
+
+
+
+## jsonwebtoken: token验证操作
+
+
+
+## md5: 加密密码
+
+
+
+## images: 图片压缩处理插件
+
+```shell
+npm install images
+```
+

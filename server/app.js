@@ -1,14 +1,25 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-
-
 const app = express()
+// 引入body-parser
+const bodyParser = require('body-parser')
+// 引入cookie-parser
+const cookieParser = require('cookie-parser')
+
+const cookieV = require('./middleware/cookieV')
+
+
 
 // 配置body-parser
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
+
+// 配置cookie-parser
+app.use(cookieParser())
+
+app.use(cookieV)
+
 // 开放静态目录
 app.use(express.static('public'))
 

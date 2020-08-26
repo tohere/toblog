@@ -19,6 +19,7 @@
 <script>
 import ArticleTitle from '@/components/common/articleTitle'
 import { getArtById } from '../api/get'
+import { setReadNum } from '../api/put'
 export default {
   name: 'Posts',
   components: {
@@ -53,6 +54,7 @@ export default {
       const art = await getArtById(id)
       if (art.status === 1) {
         this.art = art.data[0]
+        setReadNum(this.$route.params.id, ++this.art.readnums)
       } else {
         throw Error(art.err)
       }

@@ -34,7 +34,7 @@
           <span v-if="index !== cates.length-1"> ，</span>
         </span>
       </span>
-      <span title="阅读次数" v-if="$route.fullPath.includes('posts')">
+      <span title="阅读次数">
        <i class="iconfont icon-yanjing"></i>
         <span class="update hidden-sm-and-down">阅读次数:&nbsp;</span>
         <span class="dot">{{
@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     goCate (cate) {
-      console.log(cate)
       getArtsByCateId({
         cate,
         page: 1,

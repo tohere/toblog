@@ -5,13 +5,13 @@
       <div class="search-box">
         <input
           type="search"
-          @keyup.enter="search"
+          @keyup.enter="searchWord"
           v-model="word"
           class="search"
           placeholder="请输入搜索内容"
         />
       </div>
-      <button class="btn" @click="search">搜索</button>
+      <button class="btn" @click="searchWord">搜索</button>
       <router-link tag="button" to='/admin/write' class="btn primary">写文章</router-link>
     </div>
     <div class="arts">
@@ -19,6 +19,7 @@
         :articles="articles"
         @optTop="top"
         @setArtShow="delArt"
+        @edit='editArt'
       ></art-list>
     </div>
     <Pagination
@@ -61,15 +62,21 @@ export default {
     }
   },
   created() {
-    this.getPageArticles(1, this.pageSize)
-    this.getNums()
+    this.getPageArticles(1, this.pageSize, 'admin')
+    this.getNums('admin')
   },
   methods: {
+    /**
+     * 文章关键字搜索
+     */
+    searchWord () {
+      this.search('admin')
+    },
     /**
      * 点击页码跳转
      */
     changePage(item) {
-      this.getPageArticles(item, this.pageSize)
+      this.getPageArticles(item, this.pageSize, 'admin')
     },
     /**
      * 取消置顶
@@ -78,7 +85,7 @@ export default {
       optTop(param.id, param.top)
         .then((res) => {
           if (res.status === 1) {
-            this.getPageArticles(1, this.pageSize)
+            this.getPageArticles(1, this.pageSize, 'admin')
           } else {
             throw Error(res.err)
           }
@@ -100,8 +107,8 @@ export default {
         setArtShow(this.delObj.id, this.delObj.show)
           .then((res) => {
             if (res.status === 1) {
-              this.getPageArticles(1, this.pageSize)
-              this.getNums()
+              this.getPageArticles(1, this.pageSize, 'admin')
+              this.getNums('admin')
             } else {
               throw Error(res.err)
             }
@@ -112,6 +119,17 @@ export default {
       }
       this.showDialog = false
     },
+    /**
+     * 编辑文章
+     */
+    editArt (art) {
+      this.$router.push({
+        name: 'Write',
+        params: {
+          id: art.id
+        }
+      })
+    }
   },
 }
 </script>

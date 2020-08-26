@@ -15,10 +15,12 @@
 import List from '../common/list'
 import Dialog from '@/components/common/dialog'
 
-import { getCates } from '@/api/get'
+import cateMixin from '@/mixin/cateMixin'
+
 import { delCateById } from '@/api/delete'
 export default {
   name: 'AdminCates',
+  mixins: [cateMixin],
   components: {
     List,
     Dialog,
@@ -31,23 +33,9 @@ export default {
     }
   },
   created() {
-    this.getAllCates()
+    this.getAllCates('all', 'admin')
   },
   methods: {
-    // 获取所有分类
-    getAllCates() {
-      getCates()
-        .then((res) => {
-          if (res.status === 1) {
-            this.cates = res.cates
-          } else {
-            throw Error(res.err)
-          }
-        })
-        .catch((err) => {
-          throw Error(err)
-        })
-    },
     // 删除分类
     delCate(id) {
       this.isShow = true
@@ -62,7 +50,7 @@ export default {
         delCateById(this.delId)
           .then((res) => {
             if (res.status === 1) {
-              this.getAllCates()
+              this.getAllCates('all', 'admin')
             } else {
               throw Error(res.err)
             }

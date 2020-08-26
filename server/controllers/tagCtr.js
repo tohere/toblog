@@ -21,7 +21,10 @@ const getAllTags = (req, res) => {
   const sql = `SELECT
                   t.*
                 FROM
-                  tags t;`
+                  tags t
+                ORDER BY
+                  id DESC
+                 ;`
   query(sql, [], (err, data) => {
     if (err) {
       return res.json({
@@ -67,7 +70,95 @@ const getOneArtTags = (req, res) => {
   })
 }
 
+function getIds(id) {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT tag_id tagId FROM art_tag_fk WHERE art_id = ?;`
+    query(sql, [id], (err, data) => {
+      if (err) {
+        resolve({
+          status: 0,
+          err,
+        })
+      }
+      resolve({
+        status: 1,
+        data,
+      })
+    })
+  })
+}
+/**
+ * 通过文章id获取对应关键词ids
+ */
+/*
+SELECT tag_id tagId FROM art_tag_fk WHERE art_id = 59
+*/
+const getTagIdsByArtId = (req, res) => {
+  const artId = Number(req.query.id)
+  getIds(artId)
+    .then((response) => {
+      res.send(response)
+    })
+    .catch((err) => {
+      throw Error(err)
+    })
+}
+
 // --------------------- post操作部分 ---------------------
+/**
+ * 添加新关键词
+ */
+/*
+INSERT INTO	tags(title) VALUES('新关键词')
+*/
+const addTag = (req, res) => {
+  const tag = req.body.title
+  if (!tag) {
+    return res.json({
+      status: 0,
+      err: '关键词不能为空',
+    })
+  }
+  const sql = `INSERT INTO	tags(title) VALUES(?);`
+  query(sql, [tag], (err, data) => {
+    if (err) {
+      return res.json({
+        status: 0,
+        err,
+      })
+    }
+    res.json({
+      status: 1,
+      data,
+    })
+  })
+}
+
+/**
+ * 建立文章和关键词id的关系，即插入数据到art_tag_fk表中
+ */
+const addArtTagFK = (req, res) => {
+  const artId = Number(req.body.artId)
+  const tags = req.body.tags
+  const sql = `INSERT INTO art_tag_fk(art_id, tag_id) VALUES ?;`
+  const arr = []
+  tags.forEach((tag) => {
+    arr.push([artId, Number(tag.id)])
+  })
+  query(sql, [arr], (err, data) => {
+    if (err) {
+      return res.json({
+        status: 0,
+        err,
+      })
+    }
+    res.json({
+      status: 1,
+      data,
+    })
+  })
+}
+
 // --------------------- put操作部分 ---------------------
 // --------------------- delete操作部分 ---------------------
 /**
@@ -97,8 +188,35 @@ const delTagById = (req, res) => {
   })
 }
 
+/**
+ * 通过文章id删除art_tag_fk中对应字段
+ */
+/*
+DELETE FROM art_tag_fk WHERE id in (65,66,67)
+*/
+const delIds = (req, res) => {
+  const id = Number(req.body.id)
+  const sql = `DELETE FROM art_tag_fk WHERE tag_id in (?)`
+  query(sql, [id], (err, data) => {
+    if (err) {
+      return res.json({
+        status: 0,
+        err,
+      })
+    }
+    res.json({
+      status: 1,
+      data,
+    })
+  })
+}
+
 module.exports = {
   getAllTags,
   getOneArtTags,
-  delTagById
+  delTagById,
+  addTag,
+  addArtTagFK,
+  getTagIdsByArtId,
+  delIds,
 }
