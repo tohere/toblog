@@ -8,10 +8,11 @@
 
 <script>
 import ToTop from '@/components/common/totop'
+
 export default {
   name: 'App',
   components: {
-    ToTop,
+    ToTop
   },
   data() {
     return {

@@ -10,8 +10,10 @@ VueCookies.config('1d')
 
 // 自定义插件
 import toast from './plugins/toast'
+import Loading from './plugins/loading'
 
 Vue.use(toast)
+Vue.use(Loading)
 
 // markdown解析器引入
 import mavonEditor from 'mavon-editor'
