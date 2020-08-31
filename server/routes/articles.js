@@ -31,6 +31,8 @@ router.put('/top', artCtr.optTop)
 router.put('/show', artCtr.setArtShow)
 // 设置谋篇文章阅读数
 router.put('/setReadNum', artCtr.setReadNum)
+// 更新文章
+router.put('/updateArt', artCtr.updateArt)
 
 
 module.exports = router

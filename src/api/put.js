@@ -35,3 +35,9 @@ export const setArtShow = (id, show) => axios.put('/articles/show', {id, show})
 export const setReadNum = (id, num) => axios.put('/articles/setReadNum', {id, num})
 
 
+/**
+ * 更新文章
+ */
+
+ export const updateArt = (data) => axios.put('/articles/updateArt', data)
+

@@ -37,11 +37,11 @@ const upImg = (req, res) => {
       '../public/statics/imgs/' + req.file.filename
     )
 
-    // images(img) //Load image from file
-    //   .save(img, {
-    //     //Save the image to a file, with the quality of 50
-    //     quality: 50, //保存图片到文件,图片质量为50
-    //   })
+    images(img) //Load image from file
+      .save(img, {
+        //Save the image to a file, with the quality of 50
+        quality: 50, //保存图片到文件,图片质量为50
+      })
 
     // 注意：此处配置了public为静态目录根目录，所以返回的时候不要带着public
     let url = `http://${req.headers.host}/statics/imgs/${req.file.filename}`

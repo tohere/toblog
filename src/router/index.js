@@ -16,6 +16,7 @@ const Archives = () => import('@/views/Archives')
 const Posts = () => import('@/views/Posts')
 const About = () => import('@/views/About')
 const Search = () => import('@/views/Search')
+const Chat = () => import('@/views/Chat')
 const NotFound = () => import('@/views/NotFound')
 
 // 后台admin页面
@@ -91,6 +92,11 @@ const routes = [
         name: 'Posts',
         component: Posts,
       },
+      {
+        path: '/chat',
+        name: 'Chat',
+        component: Chat
+      }
     ],
   },
   {

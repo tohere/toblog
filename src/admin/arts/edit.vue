@@ -41,6 +41,7 @@ import ArtMask from './artMask'
 import { getArtById, getTagIds, getCateIds } from '@/api/get'
 import { upImg, addCate, addTag, addArtCate, addArtTag } from '@/api/post'
 import { delImg, delCateIds, delTagIds } from '@/api/delete'
+import { updateArt } from '@/api/put'
 
 export default {
   name: 'Edit',
@@ -163,7 +164,7 @@ export default {
       // 第一步.将图片上传到服务器.
       var formdata = new FormData()
       formdata.append('image', $file)
-      upImg('/files/upload', formdata).then((url) => {
+      upImg(formdata).then((url) => {
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
         /**
          * $vm 指为mavonEditor实例，可以通过如下两种方式获取
@@ -212,14 +213,27 @@ export default {
       if (delCate.status === 1 && delTag.status === 1) {
         const addCate = await addArtCate(this.artId, cates)
         const addTag = await addArtTag(this.artId, tags)
-        this.$toast.show({
-          text: '更新成功！',
-          type: 'success',
+        updateArt({
+          id: this.artId,
+          title: this.title,
+          content: this.content,
+        }).then((res) => {
+          if (res.status === 1) {
+            this.$toast.show({
+              text: '更新成功！',
+              type: 'success',
+            })
+            this.$router.replace('/admin')
+            setTimeout(() => {
+              localStorage.removeItem('editArt' + this.artId)
+            }, 1100)
+          } else {
+            this.$toast.show({
+              text: '更新出错！',
+              type: 'error',
+            })
+          }
         })
-        this.$router.replace('/admin')
-        setTimeout(() => {
-          localStorage.removeItem('editArt' + this.artId)
-        }, 1100);
       } else {
         this.$toast.show({
           text: '更新出错！',

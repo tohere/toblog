@@ -15,7 +15,7 @@
       </li>
     </ul> -->
     <!-- 友链 -->
-    <div class="friendly">
+    <div class="friendly" v-if="friendlinks.length">
       <div class="title">
         <i class="iconfont icon-friend-link"></i>
         <span>友情链接</span>

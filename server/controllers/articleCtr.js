@@ -207,6 +207,30 @@ const addArt = (req, res) => {
     })
   })
 }
+/**
+ * 更新文章
+ */
+/* 
+UPDATE arts SET title = '你好', content='测试', up_time='2020-08-31 16:42:38' WHERE id = 93
+*/
+const updateArt = (req, res) => {
+  const art = req.body
+  let up_time = Date.now()
+  up_time = dateFormat(up_time)
+  const sql = `UPDATE arts SET title = ?, content=?, up_time=? WHERE id = ?`
+  query(sql, [art.title, art.content, up_time, art.id], (err, data) => {
+    if (err) {
+      return res.json({
+        status: 0,
+        err
+      })
+    }
+    res.json({
+      status: 1,
+      data
+    })
+  })
+}
 
 
 
@@ -303,5 +327,6 @@ module.exports = {
   setArtShow,
   search,
   getRecycle,
-  setReadNum
+  setReadNum,
+  updateArt
 }

@@ -1,6 +1,6 @@
 <template>
   <!-- 首页页面 -->
-  <div id="home" ref='home' v-if="articles.length > 0">
+  <div id="home" ref='home' v-show="articles.length > 0">
     <article-info
       v-for="(info, index) in articles"
       :key="index"

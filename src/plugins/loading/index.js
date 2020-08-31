@@ -23,7 +23,6 @@ Loading.install = (Vue) => {
       }, time)
     },
     hide() {
-      console.log('hide')
       instance.show = false
     },
   }
